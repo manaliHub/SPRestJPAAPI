@@ -1,11 +1,23 @@
 package com.example.SPRestJPAAPI.model;
-
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name="product")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
     private int id;
+
+    @Column(name="name")
     private String name;
+
+    @Column(name="description")
     private String description;
+
+    @Column(name="price")
     private BigDecimal price;
 
     public Product(int id, String name, String description, BigDecimal price) {
