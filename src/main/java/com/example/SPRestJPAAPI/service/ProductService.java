@@ -64,7 +64,7 @@ public class ProductService {
             }
             return e;
         }).collect(Collectors.toList());*/
-        product.setId(id);
+        //product.setId(id);
         productRepository.save(product);
     }
 
@@ -78,7 +78,7 @@ public class ProductService {
             }
             return e;
         }).collect(Collectors.toList());*/
-        product.setId(id);
+        //product.setId(id);
         productRepository.save(product);
     }
 }

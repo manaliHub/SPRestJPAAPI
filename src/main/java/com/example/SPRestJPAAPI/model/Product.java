@@ -20,6 +20,9 @@ public class Product {
     @Column(name="price")
     private BigDecimal price;
 
+    public Product() {
+    }
+
     public Product(int id, String name, String description, BigDecimal price) {
         this.id = id;
         this.name = name;
