@@ -1,19 +1,19 @@
 package com.example.SPRestJPAAPI.controller;
 
-import com.example.SPRestJPAAPI.ResponseObject.User;
 import com.example.SPRestJPAAPI.appconfig.AppConfig;
 import com.example.SPRestJPAAPI.model.Product;
 import com.example.SPRestJPAAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
 import java.util.Optional;
 
+/**
+ * THis controller has REST endpoints which then interact with MySQL database
+ */
 @RestController
 public class ProductController {
 
@@ -22,27 +22,6 @@ public class ProductController {
 
     @Autowired
     public ProductService productService;
-
-    /**
-     * This endpoint comsume Free public API endpoint using RestTemplate.getForEntity
-     * @return
-     */
-    @GetMapping("/callExternalAPI1")
-    public User callExternalAPI1(){
-        //This free public endpoint. See the result by hitting this URL on browser
-        String url="https://jsonplaceholder.typicode.com/todos/1";
-        //RestTemplate restTemplate = new RestTemplate();
-        return appConfig.restTemplate().getForEntity(url, User.class).getBody();
-    }
-
-    /**
-     * This is just sample
-     * @return
-     */
-    @GetMapping("/")
-    public String getDummyProduct(){
-        return "product";
-    }
 
     /**
      * Here I am sending request model class as reponse.
