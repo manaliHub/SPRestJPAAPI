@@ -7,6 +7,8 @@ import com.example.SPRestJPAAPI.ResponseObject.User;
 import com.example.SPRestJPAAPI.appconfig.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -42,8 +44,11 @@ public class LaptopController {
     @GetMapping("/callExternalAPI2")
     public LaptopResponse callExternalAPI2(){
         String url="https://api.restful-api.dev/objects";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        /*HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);*/
+        MultiValueMap<String,String> headers = new LinkedMultiValueMap<>();
+        headers.add("content_type", String.valueOf(MediaType.APPLICATION_JSON));
+        //headers.add("msg","hi");
 
         LaptopData laptopData = new LaptopData();
         laptopData.setYear(2019);
