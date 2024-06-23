@@ -23,6 +23,11 @@ public class ProductController {
     @Autowired
     public ProductService productService;
 
+    //I have created this constructor only for Junit testing
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
     /**
      * Here I am sending request model class as reponse.
      * if you want you can create different model class for response

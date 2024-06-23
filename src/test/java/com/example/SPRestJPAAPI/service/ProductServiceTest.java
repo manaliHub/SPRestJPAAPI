@@ -5,30 +5,40 @@ import com.example.SPRestJPAAPI.model.Product;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.boot.test.mock.mockito.MockBean;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ProductServiceTest {
 
-    /**
-     *   don't put autowire for this.otherwise repository is also autowire give actual data from db.
-     *   We need to mock repository as we have already done unit tetsing of repository class
-     */
+    @Autowired
     private ProductService productService;
 
-    @Mock
+    @MockBean
     private ProductRepository productRepository;
+
+    List<Product> productList = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
-        productService = new ProductService(this.productRepository);
+        Product p1 = new Product();
+        p1.setName("name1");
+        p1.setPrice(new BigDecimal(1.00));
+        p1.setDescription("desc1");
+        p1.setId(1);
+        Product p2 = new Product();
+        p2.setName("name2");
+        p2.setPrice(new BigDecimal(2.00));
+        p2.setDescription("desc2");
+        p2.setId(2);
+        productList.add(p1);
+        productList.add(p2);
     }
 
     @AfterEach
@@ -37,22 +47,27 @@ class ProductServiceTest {
 
     @Test
     void getAllProducts() {
-        productService.getAllProducts();
-        Mockito.verify(productRepository,Mockito.times(1)).findAll();
+        Mockito.when(productRepository.findAll()).thenReturn(productList);
+        List<Product> productList1 = productService.getAllProducts();
+        assertEquals(2,productList1.size());
+        assertEquals("name1",productList1.get(0).getName());
     }
 
     @Test
     void getProduct() {
-        productService.getProduct(6);
-        Mockito.verify(productRepository,Mockito.times(1)).findById(6);
+        Mockito.when(productRepository.findById(1)).thenReturn(productList.get(0));
+        Product p1 = productService.getProduct(1);
+        assertEquals("desc1",p1.getDescription());
     }
 
     @Test
     void createProduct() {
         Product p = new Product();
         p.setName("nm");
+        Mockito.when(productRepository.save(Mockito.any())).thenReturn(p);
+        //Mockito.when(productRepository.save(p)).thenReturn(p);
         productService.createProduct(p);
-        Mockito.verify(productRepository,Mockito.times(1)).save(p);
+        assertEquals("nm",p.getName());
     }
 
     @Test

@@ -20,11 +20,6 @@ public class ProductService {
         productList.add(new Product(3,"name3","desc3",new BigDecimal(3.00)));
     }*/
 
-    //I have creted this constructor only for JUnit testing of thos service class
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
-
     @Autowired
     private ProductRepository productRepository;
 

@@ -1,16 +1,12 @@
 package com.example.SPRestJPAAPI.dao;
 
 import com.example.SPRestJPAAPI.model.Product;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
-
-import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -43,12 +39,10 @@ class ProductRepositoryTest {
 
     @Test
     void findByIdSuccess() {
-
         //Db has already value
         Product p1 = productRepository.findById(7);
         assertEquals(7,p1.getId());
         assertEquals("name7",p1.getName());
-
     }
 
     @Test
