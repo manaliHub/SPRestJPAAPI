@@ -1,6 +1,7 @@
 package com.example.SPRestJPAAPI.controller;
 
 import com.example.SPRestJPAAPI.appconfig.AppConfig;
+import com.example.SPRestJPAAPI.exception.BadRequestException;
 import com.example.SPRestJPAAPI.model.Product;
 import com.example.SPRestJPAAPI.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class ProductController {
      */
     @PostMapping("/product")
     public ResponseEntity<Product> createProduct(@RequestBody Product product){
+        //This is request validation
+        if(product.getName()==null)
+            throw new BadRequestException("Name should not be blank");
+
         Product p = null;
         try {
             p = productService.createProduct(product);
@@ -61,22 +66,22 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable int id){
         Product product = productService.getProduct(id);
-        if(product == null)
+        /*if(product == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        else
+       else*/
             return ResponseEntity.of(Optional.of(product));
     }
 
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable int id){
-        try {
+        //try {
             productService.deleteProduct(id);
             System.out.println("Product is deleted :" + id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch(Exception e){
+       /* }catch(Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        }*/
     }
 
     /**
